@@ -1,0 +1,876 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: dependancetaches; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE dependancetaches (
+    idtache1 integer NOT NULL,
+    idtache2 integer NOT NULL
+);
+
+
+ALTER TABLE public.dependancetaches OWNER TO anou;
+
+--
+-- Name: jalon; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE jalon (
+    idjalon integer NOT NULL,
+    dateverification date,
+    idprojet integer,
+    idphase integer
+);
+
+
+ALTER TABLE public.jalon OWNER TO anou;
+
+--
+-- Name: livrable; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE livrable (
+    idlivrable integer NOT NULL,
+    type character varying(20),
+    dateproduction date,
+    idtache integer
+);
+
+
+ALTER TABLE public.livrable OWNER TO anou;
+
+--
+-- Name: lot; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE lot (
+    idlot integer NOT NULL,
+    description character varying(100)
+);
+
+
+ALTER TABLE public.lot OWNER TO anou;
+
+--
+-- Name: phase; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE phase (
+    idphase integer NOT NULL,
+    idprojet integer,
+    idsousprojet integer
+);
+
+
+ALTER TABLE public.phase OWNER TO anou;
+
+--
+-- Name: projet; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE projet (
+    idprojet integer NOT NULL,
+    description character varying(100)
+);
+
+
+ALTER TABLE public.projet OWNER TO anou;
+
+--
+-- Name: resshumaffectesurtache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resshumaffectesurtache (
+    idtache integer NOT NULL,
+    nss numeric(15,0) NOT NULL,
+    taux integer,
+    duree integer
+);
+
+
+ALTER TABLE public.resshumaffectesurtache OWNER TO anou;
+
+--
+-- Name: resshumaine; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resshumaine (
+    nss numeric(15,0) NOT NULL,
+    nom character varying(30),
+    prenom character varying(30),
+    cout numeric(7,2)
+);
+
+
+ALTER TABLE public.resshumaine OWNER TO anou;
+
+--
+-- Name: resshumpossedecompetence; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resshumpossedecompetence (
+    nss numeric(15,0) NOT NULL,
+    idcompetence integer NOT NULL
+);
+
+
+ALTER TABLE public.resshumpossedecompetence OWNER TO anou;
+
+--
+-- Name: resshumrealisetache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resshumrealisetache (
+    idtache integer NOT NULL,
+    nss numeric(15,0) NOT NULL,
+    duree integer
+);
+
+
+ALTER TABLE public.resshumrealisetache OWNER TO anou;
+
+--
+-- Name: resslogaffectesurtache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resslogaffectesurtache (
+    idtache integer NOT NULL,
+    idlogiciel integer NOT NULL,
+    taux integer,
+    duree integer
+);
+
+
+ALTER TABLE public.resslogaffectesurtache OWNER TO anou;
+
+--
+-- Name: resslogicielle; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resslogicielle (
+    idlogiciel integer NOT NULL,
+    nom character varying(30),
+    cout numeric(7,2)
+);
+
+
+ALTER TABLE public.resslogicielle OWNER TO anou;
+
+--
+-- Name: resslogrealisetache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE resslogrealisetache (
+    idtache integer NOT NULL,
+    idlogiciel integer NOT NULL,
+    duree integer
+);
+
+
+ALTER TABLE public.resslogrealisetache OWNER TO anou;
+
+--
+-- Name: ressmataffectesurtache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE ressmataffectesurtache (
+    idtache integer NOT NULL,
+    idmateriel integer NOT NULL,
+    taux integer,
+    duree integer
+);
+
+
+ALTER TABLE public.ressmataffectesurtache OWNER TO anou;
+
+--
+-- Name: ressmaterielle; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE ressmaterielle (
+    idmateriel integer NOT NULL,
+    idtypemateriel integer
+);
+
+
+ALTER TABLE public.ressmaterielle OWNER TO anou;
+
+--
+-- Name: ressmatrealisetache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE ressmatrealisetache (
+    idtache integer NOT NULL,
+    idmateriel integer NOT NULL,
+    duree integer
+);
+
+
+ALTER TABLE public.ressmatrealisetache OWNER TO anou;
+
+--
+-- Name: sousprojet; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE sousprojet (
+    idsousprojet integer NOT NULL,
+    description character varying(100),
+    idprojet integer,
+    idlot integer
+);
+
+
+ALTER TABLE public.sousprojet OWNER TO anou;
+
+--
+-- Name: tache; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE tache (
+    idtache integer NOT NULL,
+    datedebeffective date,
+    datedebauplustard date,
+    datedebauplustot date,
+    datefineffective date,
+    datefinauplustard date,
+    datefinauplustot date,
+    charge numeric(5,2),
+    descriptionobjectifs character varying(100),
+    idphase integer
+);
+
+
+ALTER TABLE public.tache OWNER TO anou;
+
+--
+-- Name: tachenecessitetypecomp; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE tachenecessitetypecomp (
+    idtache integer NOT NULL,
+    idcompetence integer NOT NULL
+);
+
+
+ALTER TABLE public.tachenecessitetypecomp OWNER TO anou;
+
+--
+-- Name: typecompetence; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE typecompetence (
+    idcompetence integer NOT NULL,
+    nom character varying(20)
+);
+
+
+ALTER TABLE public.typecompetence OWNER TO anou;
+
+--
+-- Name: typemateriel; Type: TABLE; Schema: public; Owner: anou; Tablespace: 
+--
+
+CREATE TABLE typemateriel (
+    idtype integer NOT NULL,
+    description character varying(100),
+    cout numeric(7,2)
+);
+
+
+ALTER TABLE public.typemateriel OWNER TO anou;
+
+--
+-- Data for Name: dependancetaches; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY dependancetaches (idtache1, idtache2) FROM stdin;
+\.
+
+
+--
+-- Data for Name: jalon; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY jalon (idjalon, dateverification, idprojet, idphase) FROM stdin;
+\.
+
+
+--
+-- Data for Name: livrable; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY livrable (idlivrable, type, dateproduction, idtache) FROM stdin;
+\.
+
+
+--
+-- Data for Name: lot; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY lot (idlot, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: phase; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY phase (idphase, idprojet, idsousprojet) FROM stdin;
+\.
+
+
+--
+-- Data for Name: projet; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY projet (idprojet, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resshumaffectesurtache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resshumaffectesurtache (idtache, nss, taux, duree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resshumaine; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resshumaine (nss, nom, prenom, cout) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resshumpossedecompetence; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resshumpossedecompetence (nss, idcompetence) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resshumrealisetache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resshumrealisetache (idtache, nss, duree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resslogaffectesurtache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resslogaffectesurtache (idtache, idlogiciel, taux, duree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resslogicielle; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resslogicielle (idlogiciel, nom, cout) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resslogrealisetache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY resslogrealisetache (idtache, idlogiciel, duree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: ressmataffectesurtache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY ressmataffectesurtache (idtache, idmateriel, taux, duree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: ressmaterielle; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY ressmaterielle (idmateriel, idtypemateriel) FROM stdin;
+\.
+
+
+--
+-- Data for Name: ressmatrealisetache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY ressmatrealisetache (idtache, idmateriel, duree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: sousprojet; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY sousprojet (idsousprojet, description, idprojet, idlot) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tache; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY tache (idtache, datedebeffective, datedebauplustard, datedebauplustot, datefineffective, datefinauplustard, datefinauplustot, charge, descriptionobjectifs, idphase) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tachenecessitetypecomp; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY tachenecessitetypecomp (idtache, idcompetence) FROM stdin;
+\.
+
+
+--
+-- Data for Name: typecompetence; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY typecompetence (idcompetence, nom) FROM stdin;
+\.
+
+
+--
+-- Data for Name: typemateriel; Type: TABLE DATA; Schema: public; Owner: anou
+--
+
+COPY typemateriel (idtype, description, cout) FROM stdin;
+\.
+
+
+--
+-- Name: idtache1_idtache2_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY dependancetaches
+    ADD CONSTRAINT idtache1_idtache2_pkey PRIMARY KEY (idtache1, idtache2);
+
+
+--
+-- Name: idtache_idcompetence_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY tachenecessitetypecomp
+    ADD CONSTRAINT idtache_idcompetence_pkey PRIMARY KEY (idtache, idcompetence);
+
+
+--
+-- Name: idtache_idlogiciel_2_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resslogrealisetache
+    ADD CONSTRAINT idtache_idlogiciel_2_pkey PRIMARY KEY (idtache, idlogiciel);
+
+
+--
+-- Name: idtache_idlogiciel_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resslogaffectesurtache
+    ADD CONSTRAINT idtache_idlogiciel_pkey PRIMARY KEY (idtache, idlogiciel);
+
+
+--
+-- Name: idtache_idmateriel_2_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY ressmatrealisetache
+    ADD CONSTRAINT idtache_idmateriel_2_pkey PRIMARY KEY (idtache, idmateriel);
+
+
+--
+-- Name: idtache_idmateriel_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY ressmataffectesurtache
+    ADD CONSTRAINT idtache_idmateriel_pkey PRIMARY KEY (idtache, idmateriel);
+
+
+--
+-- Name: idtache_nss_2_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resshumrealisetache
+    ADD CONSTRAINT idtache_nss_2_pkey PRIMARY KEY (idtache, nss);
+
+
+--
+-- Name: idtache_nss_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resshumaffectesurtache
+    ADD CONSTRAINT idtache_nss_pkey PRIMARY KEY (idtache, nss);
+
+
+--
+-- Name: jalon_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY jalon
+    ADD CONSTRAINT jalon_pkey PRIMARY KEY (idjalon);
+
+
+--
+-- Name: livrable_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY livrable
+    ADD CONSTRAINT livrable_pkey PRIMARY KEY (idlivrable);
+
+
+--
+-- Name: lot_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY lot
+    ADD CONSTRAINT lot_pkey PRIMARY KEY (idlot);
+
+
+--
+-- Name: nss_idcompetence_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resshumpossedecompetence
+    ADD CONSTRAINT nss_idcompetence_pkey PRIMARY KEY (nss, idcompetence);
+
+
+--
+-- Name: phase_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY phase
+    ADD CONSTRAINT phase_pkey PRIMARY KEY (idphase);
+
+
+--
+-- Name: projet_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY projet
+    ADD CONSTRAINT projet_pkey PRIMARY KEY (idprojet);
+
+
+--
+-- Name: resshumaine_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resshumaine
+    ADD CONSTRAINT resshumaine_pkey PRIMARY KEY (nss);
+
+
+--
+-- Name: resslogicielle_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY resslogicielle
+    ADD CONSTRAINT resslogicielle_pkey PRIMARY KEY (idlogiciel);
+
+
+--
+-- Name: ressmaterielle_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY ressmaterielle
+    ADD CONSTRAINT ressmaterielle_pkey PRIMARY KEY (idmateriel);
+
+
+--
+-- Name: sousprojet_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY sousprojet
+    ADD CONSTRAINT sousprojet_pkey PRIMARY KEY (idsousprojet);
+
+
+--
+-- Name: tache_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY tache
+    ADD CONSTRAINT tache_pkey PRIMARY KEY (idtache);
+
+
+--
+-- Name: typecompetence_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY typecompetence
+    ADD CONSTRAINT typecompetence_pkey PRIMARY KEY (idcompetence);
+
+
+--
+-- Name: typemateriel_pkey; Type: CONSTRAINT; Schema: public; Owner: anou; Tablespace: 
+--
+
+ALTER TABLE ONLY typemateriel
+    ADD CONSTRAINT typemateriel_pkey PRIMARY KEY (idtype);
+
+
+--
+-- Name: idcompetence_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY tachenecessitetypecomp
+    ADD CONSTRAINT idcompetence_fkey FOREIGN KEY (idcompetence) REFERENCES typecompetence(idcompetence);
+
+
+--
+-- Name: idcompetence_fkey_2; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resshumpossedecompetence
+    ADD CONSTRAINT idcompetence_fkey_2 FOREIGN KEY (idcompetence) REFERENCES typecompetence(idcompetence);
+
+
+--
+-- Name: idlogiciel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resslogaffectesurtache
+    ADD CONSTRAINT idlogiciel_fkey FOREIGN KEY (idlogiciel) REFERENCES resslogicielle(idlogiciel);
+
+
+--
+-- Name: idlogiciel_fkey_2; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resslogrealisetache
+    ADD CONSTRAINT idlogiciel_fkey_2 FOREIGN KEY (idlogiciel) REFERENCES resslogicielle(idlogiciel);
+
+
+--
+-- Name: idlot_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY sousprojet
+    ADD CONSTRAINT idlot_fkey FOREIGN KEY (idlot) REFERENCES lot(idlot);
+
+
+--
+-- Name: idmateriel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY ressmataffectesurtache
+    ADD CONSTRAINT idmateriel_fkey FOREIGN KEY (idmateriel) REFERENCES ressmaterielle(idmateriel);
+
+
+--
+-- Name: idmateriel_fkey_2; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY ressmatrealisetache
+    ADD CONSTRAINT idmateriel_fkey_2 FOREIGN KEY (idmateriel) REFERENCES ressmaterielle(idmateriel);
+
+
+--
+-- Name: idphase_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY jalon
+    ADD CONSTRAINT idphase_fkey FOREIGN KEY (idphase) REFERENCES phase(idphase);
+
+
+--
+-- Name: idphase_fkey_2; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY tache
+    ADD CONSTRAINT idphase_fkey_2 FOREIGN KEY (idphase) REFERENCES phase(idphase);
+
+
+--
+-- Name: idprojet_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY sousprojet
+    ADD CONSTRAINT idprojet_fkey FOREIGN KEY (idprojet) REFERENCES projet(idprojet);
+
+
+--
+-- Name: idprojet_fkey_4; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY phase
+    ADD CONSTRAINT idprojet_fkey_4 FOREIGN KEY (idprojet) REFERENCES projet(idprojet);
+
+
+--
+-- Name: idprojet_fkey_5; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY jalon
+    ADD CONSTRAINT idprojet_fkey_5 FOREIGN KEY (idprojet) REFERENCES projet(idprojet);
+
+
+--
+-- Name: idsousprojet_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY phase
+    ADD CONSTRAINT idsousprojet_fkey FOREIGN KEY (idsousprojet) REFERENCES sousprojet(idsousprojet);
+
+
+--
+-- Name: idtache_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY livrable
+    ADD CONSTRAINT idtache_fkey FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_10; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY dependancetaches
+    ADD CONSTRAINT idtache_fkey_10 FOREIGN KEY (idtache2) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_2; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resshumaffectesurtache
+    ADD CONSTRAINT idtache_fkey_2 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_3; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY ressmataffectesurtache
+    ADD CONSTRAINT idtache_fkey_3 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_4; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resslogaffectesurtache
+    ADD CONSTRAINT idtache_fkey_4 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_5; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resshumrealisetache
+    ADD CONSTRAINT idtache_fkey_5 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_6; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY ressmatrealisetache
+    ADD CONSTRAINT idtache_fkey_6 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_7; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resslogrealisetache
+    ADD CONSTRAINT idtache_fkey_7 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_8; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY tachenecessitetypecomp
+    ADD CONSTRAINT idtache_fkey_8 FOREIGN KEY (idtache) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtache_fkey_9; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY dependancetaches
+    ADD CONSTRAINT idtache_fkey_9 FOREIGN KEY (idtache1) REFERENCES tache(idtache);
+
+
+--
+-- Name: idtypemateriel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY ressmaterielle
+    ADD CONSTRAINT idtypemateriel_fkey FOREIGN KEY (idtypemateriel) REFERENCES typemateriel(idtype);
+
+
+--
+-- Name: nss_fkey; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resshumaffectesurtache
+    ADD CONSTRAINT nss_fkey FOREIGN KEY (nss) REFERENCES resshumaine(nss);
+
+
+--
+-- Name: nss_fkey_2; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resshumrealisetache
+    ADD CONSTRAINT nss_fkey_2 FOREIGN KEY (nss) REFERENCES resshumaine(nss);
+
+
+--
+-- Name: nss_fkey_3; Type: FK CONSTRAINT; Schema: public; Owner: anou
+--
+
+ALTER TABLE ONLY resshumpossedecompetence
+    ADD CONSTRAINT nss_fkey_3 FOREIGN KEY (nss) REFERENCES resshumaine(nss);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
