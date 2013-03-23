@@ -76,7 +76,7 @@ public class ProjetTest {
 		projet.ajouterSousProjet(sousProjet);
 	}
 
-	@Test(expected = NullException.class)
+	@Test(expected = NonDefiniException.class)
 	public void suppressionSousProjetSansCreation() throws NullException,
 			NonDefiniException, EchecException {
 		projet.supprimerSousProjet(sousProjet);
