@@ -1,5 +1,6 @@
 package tests;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import classes.Jalon;
@@ -15,7 +16,7 @@ public class ProjetTest {
 	
 	//fail("Not yet implemented");
 	
-	@Test
+	@Before
 	public void initProjet() {
 		projet = new Projet();
 		sousProjet = new SousProjet();
@@ -32,13 +33,13 @@ public class ProjetTest {
 		projet.sauvegarder();
 	}
 	
-	@Test (expected = RuntimeException.class) 
+	@Test //(expected = RuntimeException.class) 
 	public void ajoutSousProjetEtPhase() {
 		projet.ajouterSousProjet(sousProjet);
 		projet.ajouterPhase(phase);
 	}
 	
-	@Test (expected = RuntimeException.class) 
+	@Test //(expected = RuntimeException.class) 
 	public void ajoutPhaseEtSousProjet() {
 		projet.ajouterPhase(phase);
 		projet.ajouterSousProjet(sousProjet);
