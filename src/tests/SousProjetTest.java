@@ -15,10 +15,13 @@ public class SousProjetTest {
 	Phase phase;
 
 	@Before
-	public void initSousProjet() throws DejaDefiniException, NonDefiniException {
+	public void initSousProjet() {
 		sousProjet = new SousProjet("SousProjetTest");
 		phase = new Phase();
-		
+	}
+	
+	@Test
+	public void ajoutSuppression() throws DejaDefiniException, NonDefiniException {
 		sousProjet.ajouterPhase(phase);
 		sousProjet.supprimerPhase(phase);
 	}
