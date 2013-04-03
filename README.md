@@ -34,3 +34,12 @@ Sous ECLIPSE : Creer un nouveau projet Java nomme "MACSI1", puis importer tout c
 14. $ \dt
 => la liste des tables doit s'afficher.
 (\q pour quitter)
+
+MAJ 03/04/13 :
+Il semble que pour pouvoir effectuer des requetes sur la base, depuis notre application, il faille etre 'super user'.
+Donc pour cela, il faut dans un terminal, faire :
+- # sudo su postgres
+- # psql
+- # alter user groupemacsi1 with superuser
+- # \q
+

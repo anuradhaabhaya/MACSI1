@@ -7,6 +7,7 @@ import exceptions.ExclusionException;
 import exceptions.NonDefiniException;
 
 public class Projet {
+	private int idProjet;
 	private LinkedList<SousProjet> listeSousProjets;
 	private LinkedList<Phase> listePhases;
 	private LinkedList<Jalon> listeJalons;
@@ -147,4 +148,14 @@ public class Projet {
 				+ ", listePhases=" + listePhases + ", listeJalons="
 				+ listeJalons +  "]";
 	}
+
+	public int getIdProjet() {
+		return idProjet;
+	}
+
+	public void setIdProjet(int idProjet) {
+		this.idProjet = idProjet;
+	}
+
+	
 }

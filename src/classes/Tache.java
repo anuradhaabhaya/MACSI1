@@ -1,13 +1,16 @@
 package classes;
 
-import java.util.Calendar;
+import java.util.LinkedList;
 
 public class Tache {
+	LinkedList<String> tache;
 
-	public Tache(Integer charge, String objectifs, Calendar dateDebutAuPlusTot,
-			Calendar dateDebutAuPlusTard, Calendar dateFinAuPlusTot,
-			Calendar dateFinAuPlusTard, Calendar dateDebut, Calendar dateFin) {
-
+	public Tache() {
+		tache = new LinkedList<String>();
+	}
+	
+	public void add(String element) {
+		tache.add(element);
 	}
 
 }
