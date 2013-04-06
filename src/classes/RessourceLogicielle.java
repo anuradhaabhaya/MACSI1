@@ -1,5 +1,15 @@
 package classes;
 
-public class RessourceLogicielle extends Ressource {
+import java.util.LinkedList;
 
+public class RessourceLogicielle extends Ressource {
+	LinkedList<String> informations;
+	
+	public RessourceLogicielle() {
+		informations = new LinkedList<String>();
+	}
+	
+	public void add(String element) {
+		informations.add(element);
+	}
 }

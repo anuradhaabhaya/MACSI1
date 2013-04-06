@@ -3,14 +3,24 @@ package classes;
 import java.util.LinkedList;
 
 public class Tache {
-	LinkedList<String> tache;
+	LinkedList<String> informations;
 
 	public Tache() {
-		tache = new LinkedList<String>();
+		informations = new LinkedList<String>();
 	}
 	
 	public void add(String element) {
-		tache.add(element);
+		informations.add(element);
 	}
 
+	public String getIdTache() {
+		String iD = null;
+		try {
+			iD = informations.getFirst();
+		}
+		catch (NullPointerException e) {
+			System.out.println("Aucune information concernant la tache.");
+		}
+		return iD;
+	}
 }
