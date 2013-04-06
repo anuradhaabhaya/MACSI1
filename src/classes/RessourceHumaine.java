@@ -3,7 +3,7 @@ package classes;
 import java.util.LinkedList;
 
 public class RessourceHumaine extends Ressource {
-	LinkedList<String> informations;
+	public LinkedList<String> informations;
 	
 	public RessourceHumaine() {
 		informations = new LinkedList<String>();
