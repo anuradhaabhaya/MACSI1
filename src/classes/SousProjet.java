@@ -11,7 +11,7 @@ public class SousProjet {
 	
 	public SousProjet(String str) {
 		listePhases = new LinkedList<Phase>();
-		description = str;
+		description = new String(str);
 	}
 
 	public void ajouterPhase(Phase phase) throws DejaDefiniException {
